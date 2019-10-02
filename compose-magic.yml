@@ -1,0 +1,26 @@
+version: '3'
+services:
+  mysql56-n1:
+    image: mysql:5.6
+    container_name: mysql56-n1
+    hostname: mysql56-n1
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysqln1pass
+    ports:
+      - 3306:3306
+    volumes:
+      - /data/mysql1:/var/lib/mysql
+
+  phpmyadmin-n1:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-n1
+    hostname: phpmyadmin-n1
+    environment:
+      #- PMA_ARBITRARY=1        # when set to 1 connection to the arbitrary server will be allowed
+      - PMA_HOSTS=mysql56-n1
+      - PMA_USER=root
+      - PMA_PASSWORD=mysqln1pass
+    ports:
+      - 8080:80
+    links:
+      - mysql56-n1
